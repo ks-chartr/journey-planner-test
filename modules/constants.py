@@ -1,0 +1,192 @@
+from shapely.geometry import Polygon
+
+# Define mode enums here
+METRO_ENUM = 'metro'
+BUS_ENUM = 'bus'
+MULTI_ENUM = 'multi'
+WALK_ENUM = 'walk'
+DRIVE_ENUM = 'drive'
+NCRTC_ENUM = 'ncrtc'
+NCRTC_GENERIC = 'generic'
+
+# Define location type enums here
+METRO_TYPE_ENUM = 'metro'
+BUS_TYPE_ENUM = 'bus'
+WALK_TYPE_ENUM = 'walk'
+NCRTC_TYPE_ENUM = 'ncrtc'
+
+# Latitudes, Longitudes, Source and Destinations Enum
+LAT = 'lat'
+LON = 'lon'
+SRC = 'src'
+DST = 'dst'
+
+SRC_TYPE = 'src_type'
+DST_TYPE = 'dst_type'
+
+SRC_NAME = 'src_name'
+DST_NAME = 'dst_name'
+
+# Define mode stop index offset here
+METRO_STOP_INDEX_OFFSET = 100000  # 100000 offset for metro stops
+BUS_STOP_INDEX_OFFSET = 0  # 0 offset for bus stops
+NCRTC_STOP_INDEX_OFFSET = 200000  # 200000 offset for ncrtc stops
+
+# Define constants related to legs here
+METRO_LEG_TRANSFER_TIME = 480  # in seconds
+NCRTC_LEG_TRANSFER_TIME = 480  # in seconds
+MAXIMUM_LEGS_ALLOWED_NON_MULTI = 5  # 5 legs allowed for non-multi
+MAXIMUM_LEGS_ALLOWED_MULTI = 7  # 7 legs allowed for multi
+MAXIMUM_LEGS_ALLOWED_NCRTC = 14
+MAXIMUM_TRAVEL_TIME_OF_ROUTE = 5*60*60  # 5 hours
+MAXIMUM_TRAVEL_TIME_OF_NCRTC_ROUTE = 7 * 60 * 60  # 5 hours
+MAXIMUM_LEGS_FOR_PENALIZATION = 4  # 4 legs allowed for penalization
+INITIAL_TIME_PENALTY_FOR_ROOT = 600  # 10 minutes
+TRANSFER_ROUTE_PENALTY = 300  # 5 minutes
+NCRTC_WAITING_TIME_PENALTY = 900
+
+# SRC and DEST locations search count
+SRC_LOCATIONS_SEARCH_COUNT = 3  # 3 locations to search for source
+DST_LOCATIONS_SEARCH_COUNT = 2  # 2 locations to search for destination
+
+
+METRO_SRC_LOCATIONS_SEARCH_COUNT = 2  # 2 locations to search for source
+METRO_DST_LOCATIONS_SEARCH_COUNT = 2  # 2 locations to search for destination
+TRANSIT_LOCATION_SEARCH_COUNT_BY_NCRTC = 2
+NCRTC_LOCATION_SEARCH_COUNT = 1
+
+NCRTC_SRC_LOCATIONS_SEARCH_COUNT = 1  # 1 location to search for source
+NCRTC_DST_LOCATIONS_SEARCH_COUNT = 1  # 1 location to search for destination
+
+PTX_SRC_DST_LOCATIONS_SEARCH_COUNT = 1000
+MAXIMUM_PATH_IN_RESPONSE = 1000
+MAXIMUM_PATHS_PER_HOP_TYPE = 1
+# ENUMS for locations
+DELHI_NCR = 'DELHI_NCR'
+NCRTC_BOUNDARY = 'NCRTC_BOUNDARY'
+
+# enums specific to code
+WAITING_TIME_THRESHOLD = 3 * 60 * 60  # 3 hours
+TRANSFER_THRESHOLD = 2  # 2 km
+WALK_TRANSFER = 1
+BUS_TRANSFER = 1
+PER_TYPE_PATHS = 5
+MULTI_ROUTE_COUNT = 3
+MULTI_NON_BUS_ROUTES = 3
+MAXIMUM_WALK_THRESHOLD = 0.35  # IN KM    For selection in walk
+ONE_HOP_PENALTY = 10
+
+# Enums related to fare
+FARE_FIRST_KM = 25  # INR
+FARE_NEXT_KM = 10  # INR
+
+# Enums related to speed
+WALKING_SPEED = 1.42  # IN m/s
+DRIVING_SPEED = 7  # IN m/s
+
+
+# Enums related to Walk:
+MAXIMUM_WALK_DISTANCE_to_REACH_NCRTC = 0.35
+
+BOUNDARIES_DELHI = [
+    (28.8179931, 76.9476496),
+    (28.8841490, 77.0815455),
+    (28.8564889, 77.2120081),
+    (28.7848994, 77.2298609),
+    (28.7126585, 77.3287379),
+    (28.6180680, 77.3424708),
+    (28.5197723, 77.3438441),
+    (28.4320985, 77.2524523),
+    (28.4077332, 77.1730339),
+    (28.4450910, 77.1222430),
+    (28.5043491, 77.0954624),
+    (28.5157099, 77.0105032),
+    (28.5035376, 76.9514011),
+    (28.5011030, 76.8849113),
+    (28.5505961, 76.8396612),
+    (28.5879034, 76.8368908),
+    (28.6316820, 76.8858347),
+    (28.6697707, 76.9347786),
+    (28.7191845, 76.9486307),
+    (28.7151350, 76.9477072),
+    (28.8009493, 76.9403195),
+    (28.8211782, 76.9440133)
+]
+
+NCRTC_D_T_M_BOUNDARY_LEFT = [
+    (28.6756234, 77.2851805),
+    (28.6900637, 77.3226303),
+    (28.7078314, 77.3446030),
+    (28.7180690, 77.3583359),
+    (28.7171657, 77.3899216),
+    (28.7277035, 77.4084610),
+    (28.7502809, 77.4249405),
+    (28.7756581, 77.4498334),
+    (28.8096513, 77.4805411),
+    (28.8819016, 77.4565187),
+    (28.9941137, 77.4808133),
+    (29.1079730, 77.5199546),
+    (29.2764657, 77.5523473)
+]
+
+NCRTC_D_T_M_BOUNDARY_RIGHT = [
+    (28.6003522, 77.3308569),
+    (28.6147241, 77.3758755),
+    (28.6290940, 77.3895175),
+    (28.6386729, 77.4086163),
+    (28.6434620, 77.4413571),
+    (28.6566309, 77.4686410),
+    (28.6889475, 77.4972892),
+    (28.7104864, 77.5218448),
+    (28.7511589, 77.5545856),
+    (28.7870332, 77.5968757),
+    (28.8181143, 77.7128326),
+    (28.8706920, 77.8410673),
+    (28.8909989, 78.0757095)
+]
+
+BOUNDARIES_NCRTC = NCRTC_D_T_M_BOUNDARY_RIGHT + NCRTC_D_T_M_BOUNDARY_LEFT[::-1]
+
+# Define the boundaries here
+BOUNDARIES = {
+    NCRTC_BOUNDARY: Polygon(BOUNDARIES_NCRTC),
+    DELHI_NCR: Polygon(BOUNDARIES_DELHI),
+}
+
+
+OTHER_COORDINATES = [
+    [28.770382, 77.510704],
+    [28.727022, 77.471466],
+    [28.699528, 77.445717],
+    [28.843395, 77.583199],
+    [28.817732, 77.556747],
+    [28.672497, 77.413788],
+    [28.667658, 77.368172],
+    [28.646475, 77.316399],
+    [28.588663, 77.300407],
+    [28.589001, 77.258057],
+    [28.583033, 77.23938],
+    [28.901552, 77.629837],
+    [28.947021, 77.67318],
+    [29.003515, 77.704582],
+    [29.099451, 77.711273],
+    [28.742188, 77.467773]
+]
+
+# Route related  constants
+COLOR_DICT = {
+    'green': '#20B2AA', 'red': '#FF4040', 'yellow': '#FFDF00', 'blue': '#4169E1',
+    'violet': '#553592', 'pink': '#FC8EAC', 'magenta': '#CC338B', 'orange/airport': '#FF4500',
+    'rapid': '#87CEEB', 'grey': '#838996', 'ncrtc': '#00FFFF'
+}
+
+TIMESTAMP_CACHE_TIMEOUT = 24 * 60 * 60
+
+
+# SERIALIZER RELATED ENUMS
+TRANSIT_CHOICES = [
+            BUS_ENUM, METRO_ENUM, MULTI_ENUM, NCRTC_ENUM, BUS_ENUM+NCRTC_ENUM, METRO_ENUM+NCRTC_ENUM, MULTI_ENUM+NCRTC_ENUM
+]
+REACHING_CHOICES = [WALK_ENUM],
+
+STOP_TYPE_CHOICES=[METRO_TYPE_ENUM, BUS_TYPE_ENUM, NCRTC_TYPE_ENUM]
