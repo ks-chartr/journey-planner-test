@@ -10,7 +10,7 @@ python3 --version  # this should return 3.10.x
 ```
 - Clone the `jatin` branch from the directions service repository at your desired location using the following command.
 ```sh
-git clone https://gitlab.com/chartrmobility/directions-service.git
+git clone https://github.com/transport-stack/journey-planner.git
 ```
 - Move to the directions folder (which is the root folder of the project).
 - Open the terminal at the root folder location of the project and create a virtual environment using the following command.
