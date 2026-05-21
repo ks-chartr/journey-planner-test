@@ -1,7 +1,7 @@
 # Directions API
 This is an API that provides directions between two points with different properties.
 
-# Installation
+# Installation + Setup
 ## Installation from the source code
 To install the API, you need to follow the steps written below:
 - Make sure you have `python==3.10` installed in your system, check the version of python using the following command.
